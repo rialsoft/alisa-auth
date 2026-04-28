@@ -1,17 +1,34 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import showToast from '../assets/toast';
+import '../assets/css/toast.css';
 
 const year = new Date().getFullYear();
 
 const username = ref(null);
 const password = ref(null);
+const isShow   = ref(false)
+const isLoading = ref(false)
+
+const togglePass = ()=> isShow.value = !isShow.value
+
+const handleSubmit = async()=>{
+    isLoading.value = true
+
+    await new Promise<void>((resolve) => setTimeout(resolve, 2000))
+
+    isLoading.value = false
+
+    const toast = document.querySelector('#toast')
+    showToast(toast as HTMLElement)
+}
 </script>
 
 <template>
     <main class="container">
         <article>
             <header style="text-align: center; ">Alisa 2.0</header>
-            <form>
+            <form @submit.prevent="handleSubmit">
                 <fieldset>
                     <label>
                         Username
@@ -19,11 +36,19 @@ const password = ref(null);
                     </label>
                     <label>
                         Password
-                        <input type="password" v-model="password" placeholder="Password" autocomplete="off" required />
+                        <div style="position: relative;">
+
+                            <input type="password" v-model="password" placeholder="Password" autocomplete="off" required v-if="!isShow" />
+                            <input type="text" v-model="password" placeholder="Password" autocomplete="off" required v-else />
+
+                            <button type="button" style="position: absolute; top: 0; right: 0; width: auto; background: transparent; border: none; padding: 0.8rem;" @click="togglePass">
+                                <i class="demo-icon" :class="{'icon-eye-off':isShow, 'icon-eye':!isShow}"></i>
+                            </button>
+                        </div>
                     </label>
                 </fieldset>
 
-                <button type="submit">Login</button>
+                <button type="submit" :aria-busy="isLoading" :disabled="isLoading">Login</button>
             </form>
         </article>
 
@@ -31,6 +56,8 @@ const password = ref(null);
             Copyright &copy; {{ year }}
         </small>
   </main>
+
+  <div id="toast" class="toast">Login Submited!</div>
 </template>
 
 <style>
