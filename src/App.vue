@@ -11,7 +11,8 @@ declare global {
 }
 
 onMounted(() => {
-  console.log('window.Telegram.WebApp', window.Telegram.WebApp.initData);
+  console.log('window.Telegram.WebApp.initData', window.Telegram.WebApp.initData);
+  console.log('window.Telegram.WebApp.initDataUnsafe', window.Telegram.WebApp.initDataUnsafe);
 })
 </script>
 
