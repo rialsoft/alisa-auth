@@ -21,6 +21,10 @@ const handleSubmit = async()=>{
 
     const toast = document.querySelector('#toast')
     showToast(toast as HTMLElement)
+
+    setTimeout(() => {
+         window.Telegram.WebApp.close()
+    }, 750);
 }
 </script>
 
