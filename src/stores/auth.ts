@@ -22,7 +22,7 @@ export const useAuthStore = defineStore('auth', {
         // prod
         this.request=true;
         let params  =   {
-                            url     : '/api/verify',
+                            url     : 'api/verify',
                             method  : 'post',
                             data    : { chat_id:chatId, username, password }
                         }
