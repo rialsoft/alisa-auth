@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { storeToRefs } from 'pinia';
 import showToast from '../assets/toast';
 import '../assets/css/toast.css';
+import { useAuthStore } from '@/stores/auth';
+const {isValidLogin} = storeToRefs(useAuthStore());
 
 const year = new Date().getFullYear();
 
@@ -15,7 +18,10 @@ const togglePass = ()=> isShow.value = !isShow.value
 const handleSubmit = async()=>{
     isLoading.value = true
 
-    await new Promise<void>((resolve) => setTimeout(resolve, 2000))
+    const chatId = window?.Telegram?.WebApp?.initDataUnsafe?.user?.id || 0
+
+    await new Promise<void>((resolve) => setTimeout(resolve, 100))
+    await useAuthStore().login(username.value,password.value, chatId);
 
     isLoading.value = false
 
