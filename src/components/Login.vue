@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { storeToRefs } from 'pinia';
 import showToast from '../assets/toast';
 import '../assets/css/toast.css';
 import { useAuthStore } from '@/stores/auth';
-const {isValidLogin} = storeToRefs(useAuthStore());
 
 const year = new Date().getFullYear();
 
