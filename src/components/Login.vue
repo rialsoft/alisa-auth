@@ -1,8 +1,18 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+const CHAT_ID = import.meta.env.VITE_CHAT_ID;
+
+import { onMounted, ref } from 'vue';
 import showToast from '../assets/toast';
 import '../assets/css/toast.css';
 import { useAuthStore } from '@/stores/auth';
+
+declare global {
+  interface Window {
+    Telegram: {
+      WebApp: any;
+    };
+  }
+}
 
 const year = new Date().getFullYear();
 
@@ -16,7 +26,7 @@ const togglePass = ()=> isShow.value = !isShow.value
 const handleSubmit = async()=>{
     isLoading.value = true
 
-    const chatId = window?.Telegram?.WebApp?.initDataUnsafe?.user?.id || 0
+    const chatId = window?.Telegram?.WebApp?.initDataUnsafe?.user?.id || CHAT_ID || 0
 
     await new Promise<void>((resolve) => setTimeout(resolve, 100))
     await useAuthStore().login(username.value,password.value, chatId);
@@ -30,6 +40,10 @@ const handleSubmit = async()=>{
          window.Telegram.WebApp.close()
     }, 750);
 }
+
+onMounted(() => {
+  console.log('Login', window.Telegram.WebApp.initDataUnsafe);
+})
 </script>
 
 <template>
