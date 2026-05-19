@@ -26,7 +26,7 @@ const togglePass = ()=> isShow.value = !isShow.value
 const handleSubmit = async()=>{
     isLoading.value = true
 
-    const chatId = window?.Telegram?.WebApp?.initDataUnsafe?.user?.id || CHAT_ID || 0
+    const chatId = String(window?.Telegram?.WebApp?.initDataUnsafe?.user?.id || CHAT_ID || 0)
 
     await new Promise<void>((resolve) => setTimeout(resolve, 100))
     await useAuthStore().login(username.value,password.value, chatId);

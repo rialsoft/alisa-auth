@@ -17,7 +17,7 @@ export const useAuthStore = defineStore('auth', {
     isRequest : (state)=> state.request,
   },
   actions: {
-    async login(username:string | null, password:string | null, chatId:number=0) {
+    async login(username:string | null, password:string | null, chatId:string='') {
       try {
         // prod
         this.request=true;
